@@ -1,0 +1,7 @@
+{
+  "name": "Chiefmark",
+  "version": "1.0",
+  "options_page": "options.html",
+  "description": "Bookmarks are coming!",
+  "manifest_version": 2
+}
