@@ -1,9 +1,9 @@
 import React from 'react';
-// import logo from '../react.svg';
+import { Container, Row, Col } from 'reactstrap';
+
+import BookmarkTree from '../components/bookmark-tree/bookmark-tree';
 
 import { getBookmarksTree } from '../services/bookmarks'
-
-import BookmarkGrid from '../components/bookmark-list/bookmark-list';
 
 import './home.css';
 
@@ -28,13 +28,14 @@ class Home extends React.Component {
     if (!this.state) return null;
 
     return (
-      <div className="Home">
-        <div className="Home-header">
-          {/*<img src={logo} className="Home-logo" alt="logo" />*/}
-          <h2>Welcome to Chiefmark</h2>
-        </div>
-        <BookmarkGrid bookmarks={this.state.bookmarks}/>
-      </div>
+      <Container>
+        <Row>
+          <Col><h2>Welcome to Chiefmark</h2></Col>
+        </Row>
+        <Row>
+          <Col xs="auto"><BookmarkTree bookmarks={this.state.bookmarks || [{}]}/></Col>
+        </Row>
+      </Container>
     );
   }
 }
