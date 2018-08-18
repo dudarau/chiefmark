@@ -64,6 +64,9 @@
     "pretty": "^2.0.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.2",
+    "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@fortawesome/react-fontawesome": "^0.1.2",
     "autoprefixer": "^7.2.5",
     "bluebird": "^3.3.4",
     "bootstrap": "^4.1.1",
