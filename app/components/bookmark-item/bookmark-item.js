@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 class BookmarkTree extends React.Component {
   render() {
-    return (<span>
-      {this.props.bookmark.title}
-    </span>);
+    return (
+      <Fragment>
+        <td>
+          <span>
+            {this.props.identation}
+            {this.props.bookmark.title}
+          </span>
+        </td>
+        <td>{(new Date(this.props.bookmark.dateAdded)).toDateString()}</td>
+        <td>
+          {Object.keys(this.props.bookmark).join(' ')}
+        </td>
+      </Fragment>);
   }
 }
 

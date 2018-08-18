@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ListGroupItem } from 'reactstrap';
 
 import BookmarkItem from '../bookmark-item/bookmark-item';
 
@@ -37,22 +36,23 @@ class BookmarkFolder extends React.Component {
     if (bookmark.children) {
       return (
         <Fragment>
-          <ListGroupItem onClick={this.onClick}>
-            {this.addIdentation(this.props.level)}
-            <FontAwesomeIcon icon="folder"/> {bookmark.title}
-            {this.state.isOpen ? <FontAwesomeIcon icon="angle-down"/> : <FontAwesomeIcon icon="angle-right"/>}
-          </ListGroupItem>
+          <tr onClick={this.onClick}>
+            <td>
+              {this.addIdentation(this.props.level)}
+              <FontAwesomeIcon icon="folder"/> {bookmark.title}
+              {this.state.isOpen ? <FontAwesomeIcon icon="angle-down"/> : <FontAwesomeIcon icon="angle-right"/>}
+            </td>
+          </tr>
           {this.state.isOpen &&
-            bookmark.children.map((item, index) => (<BookmarkFolder key={index} bookmark={item} level={this.props.level + 1}/>))
+            bookmark.children.map((item, index) => (<BookmarkFolder key={index} bookmark={item}  onClickBookmark={this.props.onClickBookmark} level={this.props.level + 1}/>))
           }
         </Fragment>
       );
     }
 
-    return (<ListGroupItem>
-      {this.addIdentation(this.props.level)}
-      <BookmarkItem bookmark={bookmark} />
-    </ListGroupItem>);
+    return (<tr onClick={() => { this.props.onClickBookmark(bookmark) }}>
+      <BookmarkItem bookmark={bookmark} identation={this.addIdentation(this.props.level + 1)}/>
+    </tr>);
   }
 }
 
