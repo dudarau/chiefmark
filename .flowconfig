@@ -1,0 +1,19 @@
+[ignore]
+  <PROJECT_ROOT>/.history/.*
+  <PROJECT_ROOT>/.history/**/.*
+  <PROJECT_ROOT>/node_modules/stylelint-no-browser-hacks/.*
+  <PROJECT_ROOT>/node_modules/stylelint-order/.*
+  <PROJECT_ROOT>/node_modules/stylelint-suitcss/.*
+  <PROJECT_ROOT>/node_modules/stylelint/.*
+  <PROJECT_ROOT>/node_modules/config-chain/.*
+
+[include]
+
+[libs]
+  config/flow/index.js
+  flow-typed/
+
+[options]
+  module.name_mapper='.*\.\(css\|less\)$' -> '<PROJECT_ROOT>/config/flow/import-style-files.js'
+  module.name_mapper='.*\.\(svg\).*' -> '<PROJECT_ROOT>/config/flow/import-media-files.js'
+  traces=1

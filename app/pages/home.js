@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
 import BookmarkTree from '../components/bookmark-tree/bookmark-tree';
 import BookmarkModal from '../components/bookmark-modal/bookmark-modal';
 
-import { getBookmarksTree } from '../services/bookmarks'
+import { getBookmarksTree } from '../services/bookmarks';
 
 import './home.css';
 
@@ -12,7 +12,7 @@ class Home extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      bookmarks: []
+      bookmarks: [],
     };
   }
 
@@ -22,10 +22,10 @@ class Home extends React.Component {
       this.setState({
         bookmarks: nodes,
       });
-    })
+    });
   }
 
-  onClickBookmark = (bookmark) => {
+  onClickBookmark = bookmark => {
     this.setState({
       selectedBookmark: bookmark,
     });
@@ -38,15 +38,22 @@ class Home extends React.Component {
       <Fragment>
         <Container>
           <Row>
-            <Col><h2>Welcome to Chiefmark</h2></Col>
+            <Col>
+              <h2>Welcome to Chiefmark</h2>
+            </Col>
           </Row>
           <Row>
-            <Col xs="auto"><BookmarkTree bookmarks={this.state.bookmarks || [{}]} onClickBookmark={this.onClickBookmark}/></Col>
+            <Col xs="auto">
+              <BookmarkTree
+                bookmarks={this.state.bookmarks || [{}]}
+                onClickBookmark={this.onClickBookmark}
+              />
+            </Col>
           </Row>
         </Container>
-        {this.state.selectedBookmark &&
-          <BookmarkModal bookmark={this.state.selectedBookmark}/>
-        }
+        {this.state.selectedBookmark && (
+          <BookmarkModal bookmark={this.state.selectedBookmark} />
+        )}
       </Fragment>
     );
   }

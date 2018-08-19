@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 
 class BookmarkTree extends React.Component {
   render() {
@@ -10,11 +10,10 @@ class BookmarkTree extends React.Component {
             {this.props.bookmark.title}
           </span>
         </td>
-        <td>{(new Date(this.props.bookmark.dateAdded)).toDateString()}</td>
-        <td>
-          {Object.keys(this.props.bookmark).join(' ')}
-        </td>
-      </Fragment>);
+        <td>{new Date(this.props.bookmark.dateAdded).toDateString()}</td>
+        <td>{Object.keys(this.props.bookmark).join(' ')}</td>
+      </Fragment>
+    );
   }
 }
 

@@ -5,7 +5,7 @@ class BookmarkModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: true
+      modal: true,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -13,7 +13,7 @@ class BookmarkModal extends React.Component {
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   }
 
@@ -21,12 +21,14 @@ class BookmarkModal extends React.Component {
     return (
       <Modal isOpen={this.state.modal} toggle={this.toggle}>
         <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-        <ModalBody>
-          {JSON.stringify(this.props.bookmark)}
-        </ModalBody>
+        <ModalBody>{JSON.stringify(this.props.bookmark)}</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          <Button color="primary" onClick={this.toggle}>
+            Do Something
+          </Button>{' '}
+          <Button color="secondary" onClick={this.toggle}>
+            Cancel
+          </Button>
         </ModalFooter>
       </Modal>
     );
