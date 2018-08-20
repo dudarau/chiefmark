@@ -9,7 +9,8 @@ class BookmarkTree extends React.Component {
       <Table>
         <tbody>
           <BookmarkFolder
-            bookmark={this.props.bookmarks[0]}
+            bookmark={this.props.bookmarks}
+            isFilterActive={this.props.isFilterActive}
             level={0}
             onClickBookmark={this.props.onClickBookmark}
           />

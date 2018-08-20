@@ -9,8 +9,16 @@ class BookmarkFolder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
+      isOpen: this.props.isFilterActive,
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.isFilterActive && !this.state.isOpen) {
+      this.setState({
+        isOpen: true,
+      });
+    }
   }
 
   onClick = event => {
@@ -52,6 +60,7 @@ class BookmarkFolder extends React.Component {
               <BookmarkFolder
                 key={index}
                 bookmark={item}
+                isFilterActive={this.props.isFilterActive}
                 onClickBookmark={this.props.onClickBookmark}
                 level={this.props.level + 1}
               />
