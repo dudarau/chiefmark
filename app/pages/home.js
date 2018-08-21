@@ -6,7 +6,13 @@ import BookmarkModal from '../components/bookmark-modal/bookmark-modal';
 import Filters from '../components/filters/filters';
 
 import { getBookmarksTree } from '../services/bookmarks';
-import {applyFilters, isFiltersEmpty, getTagList, processBookmark} from '../services/filters';
+import { openNewTab } from '../services/tabs';
+import {
+  applyFilters,
+  isFiltersEmpty,
+  getTagList,
+  processBookmark,
+} from '../services/filters';
 
 import './home.css';
 
@@ -20,7 +26,7 @@ class Home extends React.Component {
         startDate: null,
         endDate: null,
         tags: [],
-      }
+      },
     };
   }
 
@@ -34,45 +40,52 @@ class Home extends React.Component {
   }
 
   onClickBookmark = bookmark => {
-    this.setState({
+    openNewTab(bookmark.url);
+    /*this.setState({
       selectedBookmark: bookmark,
-    });
+    });*/
   };
 
-  handleSearchChange = (event) => {
+  handleSearchChange = event => {
     this.setState({
       filters: {
         ...this.state.filters,
         search: event.target.value,
-      }
+      },
     });
   };
 
-  handleStartDateChange = (date) => {
+  handleStartDateChange = date => {
     this.setState({
       filters: {
         ...this.state.filters,
         startDate: date,
-      }
+      },
     });
     this.forceUpdate();
   };
 
-  handleEndDateChange = (date) => {
-    this.setState({
-      filters: {
-        ...this.state.filters,
-        endDate: date,
+  handleEndDateChange = date => {
+    this.setState(
+      {
+        filters: {
+          ...this.state.filters,
+          endDate: date,
+        },
+      },
+      () => {
+        this.forceUpdate();
       }
-    }, () => {
-      this.forceUpdate();
-    });
+    );
   };
 
   render() {
     if (!this.state) return null;
 
-    const bookmarks = applyFilters(processBookmark(this.state.bookmarks[0]), this.state.filters);
+    const bookmarks = applyFilters(
+      processBookmark(this.state.bookmarks[0]),
+      this.state.filters
+    );
     const tags = getTagList();
 
     return (

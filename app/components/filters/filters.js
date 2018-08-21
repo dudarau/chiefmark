@@ -9,13 +9,18 @@ class Filters extends React.Component {
     return (
       <Form inline>
         <FormGroup>
-          <Input type="text" placeholder="Search" value={this.props.search} onChange={this.props.handleSearchChange} />
+          <Input
+            type="text"
+            placeholder="Search"
+            value={this.props.search}
+            onChange={this.props.handleSearchChange}
+          />
         </FormGroup>
         <FormGroup>
-        <DatePicker
-          selected={this.props.startDate}
-          onChange={this.props.handleStartDateChange}
-        />
+          <DatePicker
+            selected={this.props.startDate}
+            onChange={this.props.handleStartDateChange}
+          />
         </FormGroup>
         <FormGroup>
           <DatePicker

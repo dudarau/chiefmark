@@ -8,20 +8,24 @@ class BookmarkTree extends React.Component {
     return (
       <Table>
         <thead>
-        <tr>
-          <th className="title-column">title</th>
-          <th>created</th>
-          <th>last opened</th>
-          <th>tags</th>
-        </tr>
+          <tr>
+            <th className="title-column">title</th>
+            <th>created</th>
+            <th>last opened</th>
+            <th>tags</th>
+          </tr>
         </thead>
         <tbody>
-          <BookmarkFolder
-            bookmark={this.props.bookmarks}
-            isFilterActive={this.props.isFilterActive}
-            level={0}
-            onClickBookmark={this.props.onClickBookmark}
-          />
+          {this.props.bookmarks &&
+            this.props.bookmarks.children &&
+            this.props.bookmarks.children.map(bookmark => (
+              <BookmarkFolder
+                bookmark={bookmark}
+                isFilterActive={this.props.isFilterActive}
+                level={0}
+                onClickBookmark={this.props.onClickBookmark}
+              />
+            ))}
         </tbody>
       </Table>
     );

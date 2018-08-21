@@ -13,12 +13,14 @@ class BookmarkTree extends React.Component {
           </span>
         </td>
         <td>{new Date(bookmark.dateAdded).toDateString()}</td>
-        <td>{new Date(new Number(bookmark.dateLastOpened)).toDateString() }</td>
-        <td>{bookmark.tags.map((tag, index) => (
-          <Badge color="primary" key={index} pill>
-            {tag}
-          </Badge>
-        ))}</td>
+        <td>{new Date(new Number(bookmark.dateLastOpened)).toDateString()}</td>
+        <td>
+          {bookmark.tags.map((tag, index) => (
+            <Badge color="primary" key={index} pill>
+              {tag}
+            </Badge>
+          ))}
+        </td>
         {/*<td>{JSON.stringify(bookmark)}</td>*/}
       </Fragment>
     );
