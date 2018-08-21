@@ -1,6 +1,6 @@
-import { applyFilters } from '../filters';
+import { applyFilters, processAttributes, getTagList } from '../filters';
 
-const bookmarks = {
+const bookmark = {
   children: [
     {
       title: 'folder',
@@ -20,14 +20,24 @@ const bookmarks = {
 
 describe('services/filters', () => {
   it('get all if filters are empty', () => {
-    expect(applyFilters(bookmarks, { })).toEqual(bookmarks);
+    expect(applyFilters(bookmark, { })).toEqual(bookmark);
   });
 
   it('filter tree by search-string with valid result', () => {
-    expect(applyFilters(bookmarks, { search: '222' })).toEqual({"children": [{"children": [{"children": [{"title": "title 222"}], "title": "folder 1"}], "title": "folder"}]});
+    expect(applyFilters(bookmark, { search: '222' })).toEqual({"children": [{"children": [{"children": [{"title": "title 222"}], "title": "folder 1"}], "title": "folder"}]});
   });
 
   it('filter tree by search-string with empty result', () => {
-    expect(applyFilters(bookmarks, { search: '333' })).toEqual(null);
+    expect(applyFilters(bookmark, { search: '333' })).toEqual(null);
+  });
+
+  it('return empty attributes', () => {
+    expect(processAttributes('title')).toEqual({'lastOpenedDate': undefined, 'tags': []});
+    expect(getTagList().length).toBe(0);
+  });
+
+  it('return not empty attributes', () => {
+    expect(processAttributes('title [CHFM|tag1|1510242834388]')).toEqual({'lastOpenedDate': '1510242834388', 'tags': ['tag1']});
+    expect(getTagList().length).toBe(1);
   });
 });

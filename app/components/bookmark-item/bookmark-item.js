@@ -1,17 +1,25 @@
 import React, { Fragment } from 'react';
+import { Badge } from 'reactstrap';
 
 class BookmarkTree extends React.Component {
   render() {
+    const { bookmark, identation } = this.props;
     return (
       <Fragment>
         <td>
           <span>
-            {this.props.identation}
-            {this.props.bookmark.title}
+            {identation}
+            {bookmark.title}
           </span>
         </td>
-        <td>{new Date(this.props.bookmark.dateAdded).toDateString()}</td>
-        <td>{Object.keys(this.props.bookmark).join(' ')}</td>
+        <td>{new Date(bookmark.dateAdded).toDateString()}</td>
+        <td>{new Date(new Number(bookmark.lastOpenedDate)).toDateString() }</td>
+        <td>{bookmark.tags.map(tag => (
+          <Badge color="primary">
+            {tag}
+          </Badge>
+        ))}</td>
+        <td>{JSON.stringify(bookmark)}</td>
       </Fragment>
     );
   }

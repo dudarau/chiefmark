@@ -7,6 +7,15 @@ class BookmarkTree extends React.Component {
   render() {
     return (
       <Table>
+        <thead>
+        <tr>
+          <th>title</th>
+          <th>created</th>
+          <th>last opened</th>
+          <th>tags</th>
+          <th>fields</th>
+        </tr>
+        </thead>
         <tbody>
           <BookmarkFolder
             bookmark={this.props.bookmarks}

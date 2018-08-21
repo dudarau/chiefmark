@@ -6,7 +6,7 @@ import BookmarkModal from '../components/bookmark-modal/bookmark-modal';
 import Filters from '../components/filters/filters';
 
 import { getBookmarksTree } from '../services/bookmarks';
-import { applyFilters, isFiltersEmpty } from '../services/filters';
+import {applyFilters, isFiltersEmpty, getTagList, processBookmark} from '../services/filters';
 
 import './home.css';
 
@@ -72,7 +72,8 @@ class Home extends React.Component {
   render() {
     if (!this.state) return null;
 
-    const bookmarks = applyFilters(this.state.bookmarks[0], this.state.filters);
+    const bookmarks = processBookmark(applyFilters(this.state.bookmarks[0], this.state.filters));
+    const tags = getTagList();
 
     return (
       <Fragment>
