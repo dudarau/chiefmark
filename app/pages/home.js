@@ -72,7 +72,7 @@ class Home extends React.Component {
   render() {
     if (!this.state) return null;
 
-    const bookmarks = processBookmark(applyFilters(this.state.bookmarks[0], this.state.filters));
+    const bookmarks = applyFilters(processBookmark(this.state.bookmarks[0]), this.state.filters);
     const tags = getTagList();
 
     return (
@@ -87,6 +87,8 @@ class Home extends React.Component {
             <Col xs="auto">
               <Filters
                 search={this.state.filters.search}
+                startDate={this.state.filters.startDate}
+                endDate={this.state.filters.endDate}
                 handleSearchChange={this.handleSearchChange}
                 handleStartDateChange={this.handleStartDateChange}
                 handleEndDateChange={this.handleEndDateChange}

@@ -9,11 +9,10 @@ class BookmarkTree extends React.Component {
       <Table>
         <thead>
         <tr>
-          <th>title</th>
+          <th className="title-column">title</th>
           <th>created</th>
           <th>last opened</th>
           <th>tags</th>
-          <th>fields</th>
         </tr>
         </thead>
         <tbody>

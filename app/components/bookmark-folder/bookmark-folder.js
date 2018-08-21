@@ -54,6 +54,9 @@ class BookmarkFolder extends React.Component {
                 <FontAwesomeIcon icon="angle-right" />
               )}
             </td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
           {this.state.isOpen &&
             bookmark.children.map((item, index) => (

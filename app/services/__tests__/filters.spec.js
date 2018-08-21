@@ -32,12 +32,17 @@ describe('services/filters', () => {
   });
 
   it('return empty attributes', () => {
-    expect(processAttributes('title')).toEqual({'lastOpenedDate': undefined, 'tags': []});
+    expect(processAttributes('title')).toEqual({'dateLastOpened': undefined, 'tags': [], title: 'title'});
     expect(getTagList().length).toBe(0);
   });
 
   it('return not empty attributes', () => {
-    expect(processAttributes('title [CHFM|tag1|1510242834388]')).toEqual({'lastOpenedDate': '1510242834388', 'tags': ['tag1']});
+    expect(processAttributes('title[CHFM|tag1|1510242834388]')).toEqual({'dateLastOpened': '1510242834388', 'tags': ['tag1'], title: 'title'});
+    expect(getTagList().length).toBe(1);
+  });
+
+  it('return not empty attributes and process tag duplication', () => {
+    expect(processAttributes('title[CHFM|tag1|tag1|1510242834388]')).toEqual({'dateLastOpened': '1510242834388', 'tags': ['tag1', 'tag1'] , title: 'title'});
     expect(getTagList().length).toBe(1);
   });
 });
