@@ -50,8 +50,7 @@ function isDateFilterValid(_dateAdded, _dateLastOpened, _startDate, _endDate) {
 function isTagFilterValid(tags, filterTags) {
   return (
     filterTags.length === 0 ||
-    (tags.length > 0 &&
-    tags.find(tag => filterTags.includes(tag)))
+    (tags.length > 0 && tags.find(tag => filterTags.includes(tag)))
   );
 }
 

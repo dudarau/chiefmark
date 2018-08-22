@@ -1,17 +1,23 @@
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import { Container, Row, Col, Badge } from 'reactstrap';
 
 import BookmarkTree from '../components/bookmark-tree/bookmark-tree';
 import BookmarkModal from '../components/bookmark-modal/bookmark-modal';
 import Filters from '../components/filters/filters';
 
-import { getBookmarksTree, updateBookmark } from '../services/bookmarks';
+import {
+  deleteBookmark,
+  getBookmarksTree,
+  updateBookmark,
+} from '../services/bookmarks';
 import { openNewTab } from '../services/tabs';
 import {
   applyFilters,
   isFiltersEmpty,
   getTagList,
   processBookmark,
+  composeTitle,
 } from '../services/filters';
 
 import './home.css';
@@ -42,6 +48,10 @@ class Home extends React.Component {
 
   onClickBookmark = bookmark => {
     openNewTab(bookmark.url);
+    updateBookmark(bookmark.id, {
+      title: composeTitle(bookmark.title, bookmark.tags, Date.now()),
+      url: bookmark.url,
+    });
   };
 
   onEditClick = bookmark => {
@@ -58,6 +68,10 @@ class Home extends React.Component {
 
   onUpdateBookmark = (id, changes) => {
     updateBookmark(id, changes);
+  };
+
+  onDeleteBookmark = id => {
+    deleteBookmark(id);
   };
 
   handleSearchChange = event => {
@@ -88,7 +102,6 @@ class Home extends React.Component {
   };
 
   handleTagFilterChange = tags => {
-    console.log(tags);
     this.setState({
       filters: {
         ...this.state.filters,
@@ -97,7 +110,27 @@ class Home extends React.Component {
     });
   };
 
-  handleTagButtonClicked = () => {
+  handleTodayButtonClick = () => {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        startDate: moment().startOf('day'),
+        endDate: null,
+      },
+    });
+  };
+
+  handleOldLinksButtonClick = () => {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        startDate: null,
+        endDate: moment().subtract(1, 'years'),
+      },
+    });
+  };
+
+  handleTagButtonClick = () => {
     this.setState({
       showTagFilterModal: true,
     });
@@ -135,7 +168,9 @@ class Home extends React.Component {
                 handleSearchChange={this.handleSearchChange}
                 handleStartDateChange={this.handleStartDateChange}
                 handleEndDateChange={this.handleEndDateChange}
-                handleTagButtonClicked={this.handleTagButtonClicked}
+                handleTagButtonClick={this.handleTagButtonClick}
+                handleTodayButtonClick={this.handleTodayButtonClick}
+                handleOldLinksButtonClick={this.handleOldLinksButtonClick}
               />
             </Col>
           </Row>
@@ -164,6 +199,7 @@ class Home extends React.Component {
             bookmark={this.state.selectedBookmark}
             onClosed={this.onClosedEditModal}
             onUpdateBookmark={this.onUpdateBookmark}
+            onDeleteBookmark={this.onDeleteBookmark}
           />
         )}
         {this.state.showTagFilterModal && (

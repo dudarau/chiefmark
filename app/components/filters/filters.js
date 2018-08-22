@@ -5,9 +5,19 @@ import { Button, Form, FormGroup, Input } from 'reactstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Filters extends React.Component {
-  handleTagButtonClicked = event => {
+  handleTagButtonClick = event => {
     event.preventDefault();
-    this.props.handleTagButtonClicked();
+    this.props.handleTagButtonClick();
+  };
+
+  handleTodayButtonClick = event => {
+    event.preventDefault();
+    this.props.handleTodayButtonClick();
+  };
+
+  handleOldLinksButtonClick = event => {
+    event.preventDefault();
+    this.props.handleOldLinksButtonClick();
   };
 
   render() {
@@ -33,11 +43,13 @@ class Filters extends React.Component {
             onChange={this.props.handleEndDateChange}
           />
         </FormGroup>
-        <Button onClick={this.handleTagButtonClicked}>
+        <Button onClick={this.handleTagButtonClick}>
           By Tags ({this.props.tags.length})
         </Button>
-        <Button>Added Today</Button>
-        <Button>Basket/Old links</Button>
+        <Button onClick={this.handleTodayButtonClick}>Today</Button>
+        <Button onClick={this.handleOldLinksButtonClick}>
+          Basket/Old links
+        </Button>
       </Form>
     );
   }

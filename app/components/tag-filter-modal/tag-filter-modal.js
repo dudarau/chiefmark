@@ -43,7 +43,11 @@ class TagFilterModal extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={this.state.modal} onClosed={this.props.onClosed}>
+      <Modal
+        isOpen={this.state.modal}
+        onClosed={this.props.onClosed}
+        backdrop={true}
+      >
         <ModalHeader toggle={this.toggle}>Filter By Tags</ModalHeader>
         <ModalBody>
           <Form>

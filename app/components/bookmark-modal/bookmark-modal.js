@@ -65,9 +65,17 @@ class BookmarkModal extends React.Component {
     });
   };
 
+  onDeleteClick = () => {
+    this.props.onDeleteBookmark(this.props.bookmark.id);
+  };
+
   render() {
     return (
-      <Modal isOpen={this.state.modal} onClosed={this.props.onClosed}>
+      <Modal
+        isOpen={this.state.modal}
+        onClosed={this.props.onClosed}
+        backdrop={true}
+      >
         <ModalHeader toggle={this.toggle}>Edit Bookmark</ModalHeader>
         <ModalBody>
           <Form>
@@ -114,6 +122,9 @@ class BookmarkModal extends React.Component {
         <ModalFooter>
           <Button color="primary" onClick={this.onSaveClick}>
             Save Changes
+          </Button>{' '}
+          <Button color="danger" onClick={this.onDeleteClick}>
+            Delete Bookmark
           </Button>{' '}
           <Button color="secondary" onClick={this.toggle}>
             Cancel
