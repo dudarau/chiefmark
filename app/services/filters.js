@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const ATTR_PREFIX = '[CHFM|';
+export const ATTR_PREFIX = '[CHFM|';
 const ATTR_END = ']';
 const ATTR_SEPATOR = '|';
 
