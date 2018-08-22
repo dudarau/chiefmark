@@ -39,11 +39,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    getBookmarksTree().then(nodes => {
-      this.setState({
-        bookmarks: nodes,
-      });
-    });
+    this.updateTree();
   }
 
   onClickBookmark = bookmark => {
@@ -51,6 +47,8 @@ class Home extends React.Component {
     updateBookmark(bookmark.id, {
       title: composeTitle(bookmark.title, bookmark.tags, Date.now()),
       url: bookmark.url,
+    }).then(() => {
+      this.updateTree();
     });
   };
 
@@ -66,12 +64,24 @@ class Home extends React.Component {
     });
   };
 
+  updateTree = () => {
+    getBookmarksTree().then(nodes => {
+      this.setState({
+        bookmarks: nodes,
+      });
+    });
+  };
+
   onUpdateBookmark = (id, changes) => {
-    updateBookmark(id, changes);
+    updateBookmark(id, changes).then(() => {
+      this.updateTree();
+    });
   };
 
   onDeleteBookmark = id => {
-    deleteBookmark(id);
+    deleteBookmark(id).then(() => {
+      this.updateTree();
+    });
   };
 
   handleSearchChange = event => {

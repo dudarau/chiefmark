@@ -13,13 +13,19 @@ export function searchBookmarks(query) {
 }
 
 export function createBookmark(bookmark) {
-  return chrome.bookmarks.create(bookmark);
+  return new Promise(resolve =>
+    chrome.bookmarks.create(bookmark, () => resolve())
+  );
 }
 
 export function deleteBookmark(id) {
-  return chrome.bookmarks.remove(id);
+  return new Promise(resolve =>
+    chrome.bookmarks.remove(id, () => resolve())
+  );
 }
 
 export function updateBookmark(id, changes) {
-  return chrome.bookmarks.update(id, changes);
+  return new Promise(resolve =>
+    chrome.bookmarks.update(id, changes, () => resolve())
+  );
 }
