@@ -19,7 +19,7 @@ function popWindow(type) {
   };
   if (type === 'open') {
     options.url = 'window.html';
-    chrome.windows.create(options, (win) => {
+    chrome.windows.create(options, win => {
       windowId = win.id;
     });
   }
@@ -29,12 +29,10 @@ chrome.contextMenus.create({
   id: CONTEXT_MENU_ID,
   title: 'React Chrome Extension Example',
   contexts: ['all'],
-  documentUrlPatterns: [
-    'https://github.com/*'
-  ]
+  documentUrlPatterns: ['https://github.com/*'],
 });
 
-chrome.contextMenus.onClicked.addListener((event) => {
+chrome.contextMenus.onClicked.addListener(event => {
   if (event.menuItemId === CONTEXT_MENU_ID) {
     popWindow('open');
   }

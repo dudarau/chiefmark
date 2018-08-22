@@ -15,9 +15,7 @@ class InjectApp extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.buttonOnClick}>
-          Open TodoApp
-        </button>
+        <button onClick={this.buttonOnClick}>Open TodoApp</button>
         <Dock
           position="right"
           dimMode="transparent"
@@ -31,7 +29,9 @@ class InjectApp extends Component {
             }}
             frameBorder={0}
             allowTransparency="true"
-            src={chrome.extension.getURL(`inject.html?protocol=${location.protocol}`)}
+            src={chrome.extension.getURL(
+              `inject.html?protocol=${location.protocol}`
+            )}
           />
         </Dock>
       </div>

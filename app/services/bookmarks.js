@@ -19,9 +19,7 @@ export function createBookmark(bookmark) {
 }
 
 export function deleteBookmark(id) {
-  return new Promise(resolve =>
-    chrome.bookmarks.remove(id, () => resolve())
-  );
+  return new Promise(resolve => chrome.bookmarks.remove(id, () => resolve()));
 }
 
 export function updateBookmark(id, changes) {

@@ -11,6 +11,7 @@ import {
   getBookmarksTree,
   updateBookmark,
 } from '../services/bookmarks';
+import { addListener, removeListener } from '../services/bookmark-listeners';
 import { openNewTab } from '../services/tabs';
 import {
   applyFilters,
@@ -40,6 +41,15 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.updateTree();
+    addListener(() => {
+      this.updateTree();
+    });
+  }
+
+  componentWillUnmount() {
+    removeListener(() => {
+      this.updateTree();
+    });
   }
 
   onClickBookmark = bookmark => {

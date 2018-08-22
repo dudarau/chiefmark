@@ -1,33 +1,12 @@
-const bluebird = require('bluebird');
+import { composeTitle } from '../../app/services/filters';
+import { updateBookmark } from '../../app/services/bookmarks';
 
-global.Promise = bluebird;
-
-function promisifier(method) {
-  // return a function
-  return function promisified(...args) {
-    // which returns a promise
-    return new Promise((resolve) => {
-      args.push(resolve);
-      method.apply(this, args);
+chrome.bookmarks.onCreated.addListener(id => {
+  chrome.bookmarks.get(id, bookmarks => {
+    bookmarks.forEach(item => {
+      updateBookmark(item.id, {
+        title: composeTitle(item.title, [], Date.now()),
+      });
     });
-  };
-}
-
-function promisifyAll(obj, list) {
-  list.forEach(api => bluebird.promisifyAll(obj[api], { promisifier }));
-}
-
-// let chrome extension api support Promise
-promisifyAll(chrome, [
-  'tabs',
-  'windows',
-  'browserAction',
-  'contextMenus'
-]);
-promisifyAll(chrome.storage, [
-  'local',
-]);
-
-require('./background/contextMenus');
-require('./background/inject');
-require('./background/badge');
+  });
+});
