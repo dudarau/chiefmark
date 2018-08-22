@@ -57,6 +57,7 @@ class BookmarkFolder extends React.Component {
             <td />
             <td />
             <td />
+            <td />
           </tr>
           {this.state.isOpen &&
             bookmark.children.map((item, index) => (
@@ -65,6 +66,7 @@ class BookmarkFolder extends React.Component {
                 bookmark={item}
                 isFilterActive={this.props.isFilterActive}
                 onClickBookmark={this.props.onClickBookmark}
+                onEditClick={this.props.onEditClick}
                 level={this.props.level + 1}
               />
             ))}
@@ -81,6 +83,7 @@ class BookmarkFolder extends React.Component {
         <BookmarkItem
           bookmark={bookmark}
           identation={this.addIdentation(this.props.level + 1)}
+          onEditClick={this.props.onEditClick}
         />
       </tr>
     );

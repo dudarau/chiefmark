@@ -5,6 +5,11 @@ import { Button, Form, FormGroup, Input } from 'reactstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Filters extends React.Component {
+  handleTagButtonClicked = event => {
+    event.preventDefault();
+    this.props.handleTagButtonClicked();
+  };
+
   render() {
     return (
       <Form inline>
@@ -28,7 +33,9 @@ class Filters extends React.Component {
             onChange={this.props.handleEndDateChange}
           />
         </FormGroup>
-        <Button>By Tags</Button>
+        <Button onClick={this.handleTagButtonClicked}>
+          By Tags ({this.props.tags.length})
+        </Button>
         <Button>Added Today</Button>
         <Button>Basket/Old links</Button>
       </Form>

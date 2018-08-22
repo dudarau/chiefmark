@@ -47,6 +47,14 @@ function isDateFilterValid(_dateAdded, _dateLastOpened, _startDate, _endDate) {
   );
 }
 
+function isTagFilterValid(tags, filterTags) {
+  return (
+    filterTags.length === 0 ||
+    (tags.length > 0 &&
+    tags.find(tag => filterTags.includes(tag)))
+  );
+}
+
 function applyFilter(bookmark, filters) {
   if (
     isTextFilterValid(bookmark.title, filters.search) &&
@@ -55,7 +63,8 @@ function applyFilter(bookmark, filters) {
       bookmark.dateLastOpened,
       filters.startDate,
       filters.endDate
-    )
+    ) &&
+    isTagFilterValid(bookmark.tags, filters.tags)
   ) {
     return bookmark;
   }
@@ -123,6 +132,12 @@ export function processAttributes(title) {
   };
 }
 
+export function composeTitle(title, tags, dateLastOpened) {
+  return `${title}${ATTR_PREFIX}${tags.join(
+    ATTR_SEPATOR
+  )}${ATTR_SEPATOR}${dateLastOpened}${ATTR_END}`;
+}
+
 export function processBookmark(bookmark) {
   if (!bookmark) {
     return bookmark;
@@ -146,7 +161,6 @@ export function isFiltersEmpty(filters) {
 }
 
 export function applyFilters(bookmark, filters) {
-  tagCollection = [];
   if (isFiltersEmpty(filters)) {
     return bookmark;
   }

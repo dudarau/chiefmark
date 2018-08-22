@@ -27,7 +27,7 @@ describe('services/filters', () => {
   });
 
   it('filter tree by search-string with valid result', () => {
-    expect(applyFilters(bookmark, { search: '222' })).toEqual({
+    expect(applyFilters(bookmark, { search: '222', tags: [] })).toEqual({
       children: [
         {
           children: [{ children: [{ title: 'title 222' }], title: 'folder 1' }],

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Badge } from 'reactstrap';
 
 import BookmarkTree from '../components/bookmark-tree/bookmark-tree';
 import BookmarkModal from '../components/bookmark-modal/bookmark-modal';
 import Filters from '../components/filters/filters';
 
-import { getBookmarksTree } from '../services/bookmarks';
+import { getBookmarksTree, updateBookmark } from '../services/bookmarks';
 import { openNewTab } from '../services/tabs';
 import {
   applyFilters,
@@ -15,6 +15,7 @@ import {
 } from '../services/filters';
 
 import './home.css';
+import TagFilterModal from '../components/tag-filter-modal/tag-filter-modal';
 
 class Home extends React.Component {
   constructor(props, context) {
@@ -27,12 +28,12 @@ class Home extends React.Component {
         endDate: null,
         tags: [],
       },
+      showTagFilterModal: false,
     };
   }
 
   componentDidMount() {
     getBookmarksTree().then(nodes => {
-      console.log(nodes);
       this.setState({
         bookmarks: nodes,
       });
@@ -41,9 +42,22 @@ class Home extends React.Component {
 
   onClickBookmark = bookmark => {
     openNewTab(bookmark.url);
-    /*this.setState({
+  };
+
+  onEditClick = bookmark => {
+    this.setState({
       selectedBookmark: bookmark,
-    });*/
+    });
+  };
+
+  onClosedEditModal = () => {
+    this.setState({
+      selectedBookmark: null,
+    });
+  };
+
+  onUpdateBookmark = (id, changes) => {
+    updateBookmark(id, changes);
   };
 
   handleSearchChange = event => {
@@ -62,21 +76,37 @@ class Home extends React.Component {
         startDate: date,
       },
     });
-    this.forceUpdate();
   };
 
   handleEndDateChange = date => {
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          endDate: date,
-        },
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        endDate: date,
       },
-      () => {
-        this.forceUpdate();
-      }
-    );
+    });
+  };
+
+  handleTagFilterChange = tags => {
+    console.log(tags);
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        tags,
+      },
+    });
+  };
+
+  handleTagButtonClicked = () => {
+    this.setState({
+      showTagFilterModal: true,
+    });
+  };
+
+  onClosedTagFilter = () => {
+    this.setState({
+      showTagFilterModal: false,
+    });
   };
 
   render() {
@@ -86,7 +116,6 @@ class Home extends React.Component {
       processBookmark(this.state.bookmarks[0]),
       this.state.filters
     );
-    const tags = getTagList();
 
     return (
       <Fragment>
@@ -102,10 +131,21 @@ class Home extends React.Component {
                 search={this.state.filters.search}
                 startDate={this.state.filters.startDate}
                 endDate={this.state.filters.endDate}
+                tags={this.state.filters.tags}
                 handleSearchChange={this.handleSearchChange}
                 handleStartDateChange={this.handleStartDateChange}
                 handleEndDateChange={this.handleEndDateChange}
+                handleTagButtonClicked={this.handleTagButtonClicked}
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="auto">
+              {this.state.filters.tags.map((tag, index) => (
+                <Badge color="primary" key={index} pill>
+                  {tag}
+                </Badge>
+              ))}
             </Col>
           </Row>
           <Row>
@@ -114,12 +154,25 @@ class Home extends React.Component {
                 bookmarks={bookmarks}
                 isFilterActive={!isFiltersEmpty(this.state.filters)}
                 onClickBookmark={this.onClickBookmark}
+                onEditClick={this.onEditClick}
               />
             </Col>
           </Row>
         </Container>
         {this.state.selectedBookmark && (
-          <BookmarkModal bookmark={this.state.selectedBookmark} />
+          <BookmarkModal
+            bookmark={this.state.selectedBookmark}
+            onClosed={this.onClosedEditModal}
+            onUpdateBookmark={this.onUpdateBookmark}
+          />
+        )}
+        {this.state.showTagFilterModal && (
+          <TagFilterModal
+            allTags={getTagList()}
+            selectedTags={this.state.filters.tags}
+            handleTagFilterChange={this.handleTagFilterChange}
+            onClosed={this.onClosedTagFilter}
+          />
         )}
       </Fragment>
     );
