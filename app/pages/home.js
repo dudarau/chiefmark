@@ -208,7 +208,7 @@ class Home extends React.Component {
               ))}
             </Col>
           </Row>
-          <Row>
+          <Row className="body-row">
             <Col md={{ size: 10, offset: 1 }}>
               <BookmarkTree
                 bookmarks={bookmarks}

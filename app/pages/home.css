@@ -1,4 +1,8 @@
 
+html, #root {
+  background-color: #f8f9fa;
+}
+
 .filter-row {
   background-color: rgb(51, 103, 214);
   padding-top: 1rem;

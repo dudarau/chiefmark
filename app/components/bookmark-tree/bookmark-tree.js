@@ -3,10 +3,12 @@ import { Table } from 'reactstrap';
 
 import BookmarkFolder from '../bookmark-folder/bookmark-folder';
 
+import './bookmark-tree.css';
+
 class BookmarkTree extends React.Component {
   render() {
     return (
-      <Table hover>
+      <Table className="bookmark-tree" borderless hover>
         <thead>
           <tr>
             <th className="title-column"></th>
