@@ -10,10 +10,12 @@ class BookmarkTree extends React.Component {
   };
 
   render() {
-    const { bookmark, identation } = this.props;
+    const { bookmark, identation, onClick } = this.props;
     return (
       <Fragment>
-        <td className="title-column">
+        <td onClick={() => {
+          onClick(bookmark);
+        }} className="title-column">
           <span>
             {identation}
             {bookmark.title}
@@ -31,7 +33,6 @@ class BookmarkTree extends React.Component {
         <td onClick={this.onEditClick}>
           <FontAwesomeIcon icon="edit" />
         </td>
-        {/*<td>{JSON.stringify(bookmark)}</td>*/}
       </Fragment>
     );
   }

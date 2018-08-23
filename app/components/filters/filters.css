@@ -1,0 +1,24 @@
+
+.filters-form {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.filters-dates {
+    display: flex;
+    margin-left: 20%;
+}
+
+.filters-datepicker {
+    margin: auto 15px;
+}
+
+.filters-button {
+    margin: 5px 10px;
+    background-color: #3f51b5 !important;
+    border-color: #3f51b5 !important;
+}
+
+.filters-buttons {
+    text-align: center;
+}

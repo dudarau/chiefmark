@@ -6,10 +6,10 @@ import BookmarkFolder from '../bookmark-folder/bookmark-folder';
 class BookmarkTree extends React.Component {
   render() {
     return (
-      <Table>
+      <Table hover>
         <thead>
           <tr>
-            <th className="title-column">title</th>
+            <th className="title-column"></th>
             <th>created</th>
             <th>last opened</th>
             <th>tags</th>

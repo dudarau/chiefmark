@@ -47,12 +47,12 @@ class BookmarkFolder extends React.Component {
           <tr onClick={this.onClick}>
             <td>
               {this.addIdentation(this.props.level)}
-              <FontAwesomeIcon icon="folder" /> {bookmark.title}
               {this.state.isOpen ? (
-                <FontAwesomeIcon icon="angle-down" />
+                <FontAwesomeIcon icon="folder-open" />
               ) : (
-                <FontAwesomeIcon icon="angle-right" />
+                <FontAwesomeIcon icon="folder" />
               )}
+              {` ${bookmark.title}`}
             </td>
             <td />
             <td />
@@ -76,13 +76,12 @@ class BookmarkFolder extends React.Component {
 
     return (
       <tr
-        onClick={() => {
-          this.props.onClickBookmark(bookmark);
-        }}
+
       >
         <BookmarkItem
           bookmark={bookmark}
           identation={this.addIdentation(this.props.level + 1)}
+          onClick={this.props.onClickBookmark}
           onEditClick={this.props.onEditClick}
         />
       </tr>

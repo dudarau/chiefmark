@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Badge,
   Button,
   Form,
   FormGroup,
@@ -53,7 +54,7 @@ class TagFilterModal extends React.Component {
           <Form>
             {this.props.allTags.map((tag, index) => (
               <FormGroup key={index} check inline>
-                <Label check>
+                <Badge color="primary" pill>
                   <Input
                     type="checkbox"
                     name={tag}
@@ -61,7 +62,7 @@ class TagFilterModal extends React.Component {
                     onChange={this.handleTagChange}
                   />{' '}
                   {tag}
-                </Label>
+                </Badge>
               </FormGroup>
             ))}
           </Form>

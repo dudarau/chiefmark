@@ -150,6 +150,17 @@ class Home extends React.Component {
     });
   };
 
+  handleResetClick = () => {
+    this.setState({
+      filters: {
+        search: '',
+        startDate: null,
+        endDate: null,
+        tags: [],
+      },
+    });
+  };
+
   handleTagButtonClick = () => {
     this.setState({
       showTagFilterModal: true,
@@ -172,30 +183,24 @@ class Home extends React.Component {
 
     return (
       <Fragment>
+        <div className="filter-row">
+          <Filters
+            search={this.state.filters.search}
+            startDate={this.state.filters.startDate}
+            endDate={this.state.filters.endDate}
+            tags={this.state.filters.tags}
+            handleSearchChange={this.handleSearchChange}
+            handleStartDateChange={this.handleStartDateChange}
+            handleEndDateChange={this.handleEndDateChange}
+            handleTagButtonClick={this.handleTagButtonClick}
+            handleTodayButtonClick={this.handleTodayButtonClick}
+            handleOldLinksButtonClick={this.handleOldLinksButtonClick}
+            handleResetClick={this.handleResetClick}
+          />
+        </div>
         <Container>
-          <Row>
-            <Col>
-              <h2>Welcome to Chiefmark</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="auto">
-              <Filters
-                search={this.state.filters.search}
-                startDate={this.state.filters.startDate}
-                endDate={this.state.filters.endDate}
-                tags={this.state.filters.tags}
-                handleSearchChange={this.handleSearchChange}
-                handleStartDateChange={this.handleStartDateChange}
-                handleEndDateChange={this.handleEndDateChange}
-                handleTagButtonClick={this.handleTagButtonClick}
-                handleTodayButtonClick={this.handleTodayButtonClick}
-                handleOldLinksButtonClick={this.handleOldLinksButtonClick}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="auto">
+          <Row className="selected-tags-row">
+            <Col md={{ size: 10, offset: 2 }}>
               {this.state.filters.tags.map((tag, index) => (
                 <Badge color="primary" key={index} pill>
                   {tag}
@@ -204,7 +209,7 @@ class Home extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs="auto">
+            <Col md={{ size: 10, offset: 1 }}>
               <BookmarkTree
                 bookmarks={bookmarks}
                 isFilterActive={!isFiltersEmpty(this.state.filters)}

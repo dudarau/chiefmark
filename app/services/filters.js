@@ -94,7 +94,7 @@ function filterBookmark(bookmark, filters) {
 
 function saveTags(tags) {
   tags.forEach(tag => {
-    if (!tagCollection.includes(tag)) {
+    if (tag && !tagCollection.includes(tag)) {
       tagCollection.push(tag);
     }
   });
