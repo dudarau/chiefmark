@@ -51,7 +51,7 @@ describe('services/filters', () => {
   });
 
   it('return not empty attributes', () => {
-    expect(processAttributes('title[CHFM|tag1|1510242834388]')).toEqual({
+    expect(processAttributes('title[KM|tag1|1510242834388]')).toEqual({
       dateLastOpened: '1510242834388',
       tags: ['tag1'],
       title: 'title',
@@ -60,7 +60,7 @@ describe('services/filters', () => {
   });
 
   it('return not empty attributes and process tag duplication', () => {
-    expect(processAttributes('title[CHFM|tag1|tag1|1510242834388]')).toEqual({
+    expect(processAttributes('title[KM|tag1|tag1|1510242834388]')).toEqual({
       dateLastOpened: '1510242834388',
       tags: ['tag1', 'tag1'],
       title: 'title',
