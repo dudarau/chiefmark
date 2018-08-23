@@ -11,3 +11,7 @@ html, #root {
 .selected-tags-row {
   margin: 10px 30px !important;
 }
+
+.badge {
+  font-size: 82% !important;
+}
