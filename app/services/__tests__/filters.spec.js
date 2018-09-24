@@ -1,4 +1,11 @@
-import { applyFilters, processAttributes, getTagList } from '../filters';
+import {
+  applyFilters,
+  processAttributes,
+  getTagList,
+  ATTR_PREFIX,
+  TAGS_PREFIX,
+  DATE_LAST_OPENED_PREFIX, composeTitle
+} from '../filters';
 
 const bookmark = {
   children: [
@@ -51,7 +58,7 @@ describe('services/filters', () => {
   });
 
   it('return not empty attributes', () => {
-    expect(processAttributes('title[KM|tag1|1510242834388]')).toEqual({
+    expect(processAttributes(`title${ATTR_PREFIX}${TAGS_PREFIX}tag1|${DATE_LAST_OPENED_PREFIX}1510242834388]`)).toEqual({
       dateLastOpened: '1510242834388',
       tags: ['tag1'],
       title: 'title',
@@ -60,11 +67,29 @@ describe('services/filters', () => {
   });
 
   it('return not empty attributes and process tag duplication', () => {
-    expect(processAttributes('title[KM|tag1|tag1|1510242834388]')).toEqual({
+    expect(processAttributes(`title${ATTR_PREFIX}${TAGS_PREFIX}tag1,tag1|${DATE_LAST_OPENED_PREFIX}1510242834388]`)).toEqual({
       dateLastOpened: '1510242834388',
       tags: ['tag1', 'tag1'],
       title: 'title',
     });
     expect(getTagList().length).toBe(1);
+  });
+
+  it('return composed title', () => {
+    const mark = {
+      dateLastOpened: '1510242834388',
+      tags: ['tag1', 'tag1'],
+      title: 'title',
+    };
+    expect(composeTitle(mark.title, mark.tags, mark.dateLastOpened)).toEqual(`title${ATTR_PREFIX}${TAGS_PREFIX}tag1,tag1|${DATE_LAST_OPENED_PREFIX}1510242834388]`);
+  });
+
+  it('return composed title', () => {
+    const mark = {
+      dateLastOpened: undefined,
+      tags: [],
+      title: 'title',
+    };
+    expect(composeTitle(mark.title, mark.tags, mark.dateLastOpened)).toEqual(`title${ATTR_PREFIX}${TAGS_PREFIX}|${DATE_LAST_OPENED_PREFIX}undefined]`);
   });
 });

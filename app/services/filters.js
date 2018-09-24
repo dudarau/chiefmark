@@ -1,6 +1,8 @@
 import moment from 'moment';
 
 export const ATTR_PREFIX = '[KM|';
+export const TAGS_PREFIX = 'TG:';
+export const DATE_LAST_OPENED_PREFIX = 'DLO:';
 const ATTR_END = ']';
 const ATTR_SEPATOR = '|';
 
@@ -104,6 +106,11 @@ export function getTagList() {
   return tagCollection;
 }
 
+function getAttribute(arr, prefix) {
+  const attr = arr.find(item => item.indexOf(prefix) === 0);
+  return attr ? attr.replace(prefix, '') : '';
+}
+
 export function processAttributes(title) {
   const startIndex =
     title && typeof title === 'string'
@@ -114,27 +121,27 @@ export function processAttributes(title) {
       ? title.indexOf(ATTR_END, startIndex)
       : -1;
   let attributes = [];
+  let tags = [];
   let dateLastOpened;
   let newTitle = title;
   if (startIndex > 0 && endIndex > 0) {
     attributes = title
       .substr(startIndex, endIndex - startIndex)
       .split(ATTR_SEPATOR);
-    dateLastOpened = attributes.pop();
+    dateLastOpened = getAttribute(attributes, DATE_LAST_OPENED_PREFIX);
+    tags = getAttribute(attributes, TAGS_PREFIX).split(',');
     newTitle = title.substr(0, startIndex - ATTR_PREFIX.length);
-    saveTags(attributes);
+    saveTags(tags);
   }
   return {
     title: newTitle,
-    tags: attributes,
+    tags: tags,
     dateLastOpened,
   };
 }
 
 export function composeTitle(title, tags, dateLastOpened) {
-  return `${title}${ATTR_PREFIX}${tags.join(
-    ATTR_SEPATOR
-  )}${ATTR_SEPATOR}${dateLastOpened}${ATTR_END}`;
+  return `${title}${ATTR_PREFIX}${TAGS_PREFIX}${tags.join(',')}${ATTR_SEPATOR}${DATE_LAST_OPENED_PREFIX}${dateLastOpened}${ATTR_END}`;
 }
 
 export function processBookmark(bookmark) {
